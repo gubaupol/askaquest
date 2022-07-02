@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
-      "baseUrl": "/src",
+      "baseUrl": "./",
       "paths": {
-        "@c/*": ["./components/*"],
-        "@h/*": ["./hooks/*"],
-        "@ser/*": ["./service/*"],
-        "@con/*": ["./context/*"],
-        "@css/*": ["./styles/*"]
+        "@c/*":["src/components/*"],
+        "@h/*":["src/hooks/*"],
+        "@s/*":["src/service/*"],
+        "@f/*":["firebase/*"],
+        "@con/*":["src/context/*"],
+        "@sty/*":["src/styles/*"],
       }
     }
   }

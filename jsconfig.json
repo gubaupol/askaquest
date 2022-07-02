@@ -6,7 +6,7 @@
         "@h/*": ["./hooks/*"],
         "@ser/*": ["./service/*"],
         "@con/*": ["./context/*"],
-        "@css/*": ["./styles/*"],
+        "@css/*": ["./styles/*"]
       }
     }
   }

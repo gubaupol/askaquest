@@ -1,22 +1,9 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import useUser, { USER_STATES } from '../hooks/useUser'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import Button from '../components/Button'
+
 import { colors } from '../styles/theme'
 
 export default function Home() {
-  const user = useUser()
-  const router = useRouter()
-  // si user es true, te redirecciona
-  useEffect(() => {
-    user && router.replace('/home')
-  }, [user])
-
-  const handleClickGithub = () => {
-    alert('a')
-  }
   return (
     <>
       <div className={styles.container}>
@@ -24,17 +11,8 @@ export default function Home() {
           <title>AskAQuest</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <section>
-          {user === USER_STATES.NOT_LOGGED && (
-            <div className="buttons">
-              <Button onClick={handleClickGithub}>Login</Button>
-            </div>
-          )}
-          {user === USER_STATES.NOT_KNOWN && (
-            <img src="loading.gif" alt="Loading..." />
-          )}
-        </section>
-      </div>{' '}
+        Aquí se hace login
+      </div>
       <style jsx>{`
         img {
           width: 120px;

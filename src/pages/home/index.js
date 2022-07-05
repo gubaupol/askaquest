@@ -1,9 +1,6 @@
 import Head from 'next/head'
-import DownBar from '../../components/DownBar'
-import AllMessages from '../../components/AllMessages'
-import { questions } from '../../service/questions'
+import Collections from '@c/Collections/Collections'
 export default function HomePage() {
-  console.log(questions)
   return (
     <>
       <Head>
@@ -11,9 +8,10 @@ export default function HomePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section>{<AllMessages questions={questions} />}</section>
-
-      <DownBar />
+      <section>Home😎</section>
+      <section>
+        <Collections />
+      </section>
 
       <style jsx>{`
         section {

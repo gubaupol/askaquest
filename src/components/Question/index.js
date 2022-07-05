@@ -1,16 +1,17 @@
 import { colors, fontSizes } from '../../styles/theme'
-import { Heart } from '../../../public/Icons/Heart'
 import { useState } from 'react'
 
-export default function Message({
+export default function Question({
   id = 0,
-  title = 'Is this your first question?',
+  title = 'Your connection did not work, do you know why?',
   anwers = ['yes', 'no', 'maybe'],
   solution = 'yes',
   creator = 'Pol',
   createdAt = '2020-01-01',
   likes = 0,
   incorrect = 0,
+  changeQuestion,
+  setResults,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(undefined)
   const select = (index) => {
@@ -18,44 +19,48 @@ export default function Message({
       ? setSelectedIndex(undefined)
       : setSelectedIndex(index)
   }
+  const handleSubmit = () => {
+    const yourAnswer = anwers[selectedIndex]
+    const isCorrect = yourAnswer === solution
+    setResults((results) => [...results, isCorrect])
+    console.log(yourAnswer, isCorrect)
+
+    changeQuestion()
+  }
   return (
     <>
       <article key={id} className="container">
-        <header>
-          <div className="names">
-            <small>@{creator}</small>
-          </div>
+        <header className="names">
+          <small>@{creator}</small>
         </header>
         <div className="content">
           <p className="title">{title}</p>
-          {anwers.map((answer, index) => {
-            return (
-              <div
-                onClick={() => select(index)}
-                className="answer"
-                style={{
-                  backgroundColor:
-                    selectedIndex === index
-                      ? colors.primary
-                      : colors.background,
-                }}
-                key={index}
-                id={`answer${index}`}
-              >
-                <span>{answer}</span>
-              </div>
-            )
-          })}
-        </div>
-
-        <div className="likesBox">
-          <Heart size={25} />
-          <span>{likes}</span>
+          <div className="answers">
+            {anwers.map((answer, index) => {
+              return (
+                <div
+                  onClick={() => select(index)}
+                  className="answer"
+                  style={{
+                    backgroundColor:
+                      selectedIndex === index
+                        ? colors.primary
+                        : colors.background,
+                  }}
+                  key={index}
+                  id={`answer${index}`}
+                >
+                  <span>{answer}</span>
+                </div>
+              )
+            })}
+          </div>
+          <p onClick={handleSubmit}>Send</p>
         </div>
       </article>
       <style jsx>{`
         .container {
-          border-bottom: solid #ccc 2px;
+          border-bottom: solid #ccc 5px;
           display: flex;
           flex-direction: column;
           padding: 10px 15px;
@@ -78,6 +83,9 @@ export default function Message({
           padding: 10px;
           border-radius: 25px;
           text-align: center;
+        }
+        .answer:hover {
+          background-color: ${colors.secondary};
         }
         .title {
           font-size: ${fontSizes.subheader};

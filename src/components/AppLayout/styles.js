@@ -40,6 +40,7 @@ export default css`
     border-radius: 10px;
     height: 100%;
     border: solid 1px ${colors.primary};
+    /* box-shadow: 0px 6px 0px -4px ${colors.primary}; */
     width: 100%;
     position: relative;
   }
@@ -47,7 +48,8 @@ export default css`
   //midas de pc
   @media (min-width: ${breakpoints.mobile}) {
     main {
-      height: 90vh;
+      height: fit-content;
+      max-height: 90vh;
       width: ${breakpoints.mobile};
     }
   }

@@ -1,18 +1,21 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import AppLayout from '@c/AppLayout'
 
 import { colors } from '../styles/theme'
 
 export default function Home() {
   return (
     <>
-      <div className={styles.container}>
-        <Head>
-          <title>AskAQuest</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        Aquí se hace login
-      </div>
+      <AppLayout>
+        <div className={styles.container}>
+          <Head>
+            <title>AskAQuest</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          Aquí se hace login
+        </div>
+      </AppLayout>
       <style jsx>{`
         img {
           width: 120px;

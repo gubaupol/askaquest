@@ -1,5 +1,5 @@
 export const breakpoints = {
-  mobile: '600px',
+  mobile: '960px',
 }
 
 export const fonts = {
@@ -18,5 +18,5 @@ export const fontSizes = {
   text: '18px',
   header: '24px',
   subheader: '20px',
-  little: '12px',
+  small: '14px',
 }

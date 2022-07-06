@@ -36,6 +36,7 @@ export default css`
 
   main {
     overflow-y: auto;
+    padding: 15px;
     background: #fff;
     border-radius: 10px;
     height: 100%;

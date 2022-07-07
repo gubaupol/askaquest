@@ -1,5 +1,6 @@
 import { breakpoints, colors, fontSizes } from '../../styles/theme'
 import Link from 'next/link'
+import { addOpacityToColor } from '@sty/utils'
 
 export default function Nav({
   actualRoot = 'home',
@@ -16,12 +17,12 @@ export default function Nav({
             </Link>
             {path &&
               path.map((item, index) => (
-                <>
+                <div key={index}>
                   <span>/</span>
-                  <Link key={index} href={`${'/' + item}`}>
+                  <Link href={`${'/' + item}`}>
                     <a>{item}</a>
                   </Link>
-                </>
+                </div>
               ))}
           </div>
           <div>Profile</div>
@@ -31,6 +32,14 @@ export default function Nav({
         section {
           display: flex;
           justify-content: center;
+        }
+        a {
+          padding: 2px 5px;
+        }
+        a:hover {
+          text-decoration: underline;
+          background-color: ${addOpacityToColor(colors.primary, 0.2)};
+          border-radius: 5px;
         }
         nav {
           display: flex;
@@ -47,6 +56,9 @@ export default function Nav({
         span {
           color: ${colors.primary};
           margin: 0 10px;
+        }
+        div {
+          display: flex;
         }
         .avatar {
           margin-left: 15px;

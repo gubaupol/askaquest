@@ -1,5 +1,6 @@
 import { colors, fontSizes } from '../../styles/theme'
 import { useState } from 'react'
+import AppLayout from '@c/AppLayout'
 
 export default function Question({
   id = 0,
@@ -7,10 +8,10 @@ export default function Question({
   anwers = ['yes', 'no', 'maybe'],
   solution = 'yes',
   creator = 'Pol',
-  createdAt = '2020-01-01',
-  likes = 0,
-  incorrect = 0,
-  changeQuestion,
+
+  nextQuestion,
+  actualQuestionIndex,
+  results,
   setResults,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(undefined)
@@ -22,58 +23,70 @@ export default function Question({
   const handleSubmit = () => {
     const yourAnswer = anwers[selectedIndex]
     const isCorrect = yourAnswer === solution
-    setResults((results) => [...results, isCorrect])
-    console.log(yourAnswer, isCorrect)
 
-    changeQuestion()
+    // concat in results array the index of question, its solution and if you did it right
+    setResults([
+      ...results,
+      {
+        index: actualQuestionIndex,
+        solution,
+        isCorrect,
+      },
+    ])
+
+    nextQuestion()
   }
   return (
     <>
-      <article key={id} className="container">
-        <header className="names">
-          <small>@{creator}</small>
-        </header>
-        <div className="content">
-          <p className="title">{title}</p>
-          <div className="answers">
-            {anwers.map((answer, index) => {
-              return (
-                <div
-                  onClick={() => select(index)}
-                  className="answer"
-                  style={{
-                    backgroundColor:
-                      selectedIndex === index
-                        ? colors.primary
-                        : colors.background,
-                  }}
-                  key={index}
-                  id={`answer${index}`}
-                >
-                  <span>{answer}</span>
-                </div>
-              )
-            })}
+      <AppLayout>
+        <article key={id} className="container">
+          <header className="names">
+            <small>@{creator}</small>
+          </header>
+          <div className="content">
+            <p className="title">{title}</p>
+            <div className="answers">
+              {anwers.map((answer, index) => {
+                return (
+                  <div
+                    onClick={() => select(index)}
+                    className="answer"
+                    style={{
+                      backgroundColor:
+                        selectedIndex === index
+                          ? colors.primary
+                          : colors.background,
+                    }}
+                    key={index}
+                    id={`answer${index}`}
+                  >
+                    <span>{answer}</span>
+                  </div>
+                )
+              })}
+            </div>
+            <p className="send" onClick={handleSubmit}>
+              Send
+            </p>
           </div>
-          <p onClick={handleSubmit}>Send</p>
-        </div>
-      </article>
+        </article>
+      </AppLayout>
       <style jsx>{`
         .container {
-          border-bottom: solid #ccc 5px;
           display: flex;
           flex-direction: column;
           padding: 10px 15px;
         }
         .container:hover {
           background-color: #f5f8fa;
-          cursor: pointer;
         }
+
         header {
           display: flex;
           justify-content: space-between;
         }
         .answer {
+          cursor: pointer;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -82,13 +95,17 @@ export default function Question({
           margin: 5px 0;
           padding: 10px;
           border-radius: 25px;
-          text-align: center;
         }
         .answer:hover {
           background-color: ${colors.secondary};
         }
         .title {
           font-size: ${fontSizes.subheader};
+        }
+        .send {
+          background: red;
+          width: fit-content;
+          cursor: pointer;
         }
       `}</style>
     </>

@@ -100,12 +100,16 @@ export default function CollectionCover({
           align-content: center;
         }
         .send {
+          cursor: pointer;
           display: flex;
           background-color: ${addOpacityToColor(colors.primary, 0.4)};
           width: fit-content;
           border-radius: 7px;
           font-size: ${fontSizes.subheader};
           padding: 5px 15px;
+        }
+        .send:hover {
+          background-color: ${addOpacityToColor(colors.primary, 0.7)};
         }
       `}</style>
     </>

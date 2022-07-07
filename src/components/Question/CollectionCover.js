@@ -9,20 +9,25 @@ export default function CollectionCover({
   title,
   tags,
   questions,
+  setStarted,
 }) {
+  // we have a questions array, they are links, we want to send the first one when start button is pressed
+
+  const start = () => {
+    setStarted(true)
+  }
   return (
     <>
       <article key={id} className="container">
-        {' '}
-        <AppLayout width="00px">
+        <AppLayout>
           <header className="names">
             <small>@{userName}</small>
           </header>
           <div className="content">
             <h3 className="title">{title}</h3>
             <span>Tags: </span>
-            {tags.map((tag) => (
-              <span key={tag} className="tag">
+            {tags.map((tag, index) => (
+              <span key={index} className="tag">
                 {tag}
               </span>
             ))}
@@ -30,16 +35,14 @@ export default function CollectionCover({
               This test has <b>{questions.length}</b> questions.
             </div>
             <div className="sendCont">
-              <p className="send">Start</p>
+              <p className="send" onClick={start}>
+                Start
+              </p>
             </div>
           </div>
         </AppLayout>
-        <AppLayout width="300px">
-          <p>Made by {userName}</p>
-        </AppLayout>
       </article>
 
-      {/*  */}
       <style jsx>{`
         article {
           width: 100%;
@@ -92,7 +95,7 @@ export default function CollectionCover({
         }
         .sendCont {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           width: 100%;
           align-items: center;
           flex-wrap: wrap;
@@ -103,8 +106,9 @@ export default function CollectionCover({
           display: flex;
           background-color: ${addOpacityToColor(colors.primary, 0.4)};
           width: fit-content;
+          border-radius: 7px;
           font-size: ${fontSizes.subheader};
-          padding: 5px 10px;
+          padding: 5px 15px;
         }
       `}</style>
     </>

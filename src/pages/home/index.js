@@ -19,7 +19,7 @@ export default function HomePage({ allCollections }) {
               <div className="profile">
                 <span>{userName}</span>
                 <img
-                  src="https://i.pravatar.cc/300"
+                  src="https://i.pravatar.cc/150"
                   alt="profile"
                   className="avatar"
                 />

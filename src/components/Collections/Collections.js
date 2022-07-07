@@ -4,12 +4,10 @@ import Link from 'next/link'
 export default function Collections({
   allCollections = [
     { id: 0, title: 'No conection' },
-    { id: 1, title: 'Col 2' },
-    { id: 2, title: 'Col 3' },
-    { id: 3, title: 'Col 4' },
+    { id: 1, title: 'No conection' },
+    { id: 2, title: 'No conection' },
   ],
 }) {
-  console.log(allCollections)
   return (
     <>
       <section>

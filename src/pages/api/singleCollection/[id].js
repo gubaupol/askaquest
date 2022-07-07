@@ -1,4 +1,5 @@
-export default function (req, res) {
+export default function handler(req, res) {
+  const { id } = req.query
   const allCollections = [
     {
       id: '0',
@@ -22,5 +23,6 @@ export default function (req, res) {
       questions: ['2', '3'],
     },
   ]
-  res.status(200).json(allCollections)
+  const quest = allCollections.find((quest) => quest.id === id)
+  res.status(200).json(quest)
 }

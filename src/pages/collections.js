@@ -4,10 +4,10 @@ import { PATH } from '@s/consts'
 import AppLayout from '@c/AppLayout'
 import Nav from '@c/Nav'
 
-export default function HomePage({ allCollections }) {
+export default function collections({ allCollections }) {
   return (
     <>
-      <Nav actualRoot="home" />
+      <Nav path={['collections']} />
       <AppLayout>
         <Head>
           <title>Home / AskaQuest </title>
@@ -15,8 +15,8 @@ export default function HomePage({ allCollections }) {
         </Head>
         <main>
           <section>
-            <p>New Collections: </p>
-            <Collections allCollections={allCollections} userName="Pol" />
+            <p>All Collections: </p>
+            <Collections allCollections={allCollections} />
           </section>
         </main>
       </AppLayout>

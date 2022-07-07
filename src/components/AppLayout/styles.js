@@ -31,6 +31,7 @@ export default css`
   div {
     display: grid;
     height: 100vh;
+    width: 100%;
     place-items: center;
   }
 

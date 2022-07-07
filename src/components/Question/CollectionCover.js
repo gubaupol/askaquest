@@ -54,10 +54,7 @@ export default function CollectionCover({
           align-items: center;
           padding: 10px 15px;
         }
-        .container:hover {
-          background-color: #f5f8fa;
-          cursor: pointer;
-        }
+
         header {
           display: flex;
           justify-content: space-between;

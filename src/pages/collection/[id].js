@@ -1,32 +1,41 @@
 import { PATH } from '@s/consts'
 import CollectionCover from '@c/Question/CollectionCover'
-// import PassingQuestions from '../../components/PassingQuestions'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Nav from '@c/Nav'
 import Question from '@c/Question'
+import Results from '@c/Results/Results'
 //
 export default function CollectionPage({
   collection,
   id,
-  DBquests,
   questionsMatched,
   userName = 'Anonymous',
 }) {
+  const MAX_QUESTION = Number(questionsMatched.length)
+  const ARRAY_QUESTIONS = questionsMatched
+  const [questionIndex, setQuestionIndex] = useState(0)
+  const [currentQuestion, setCurrentQuestion] = useState(
+    ARRAY_QUESTIONS[questionIndex]
+  )
   const [started, setStarted] = useState(false)
-  const [actualQuestionIndex, setActualQuestionIndex] = useState(0)
-  
-  const nextQuestion = () => {
-    setActualQuestionIndex(actualQuestionIndex + 1)
-  }
   const [results, setResults] = useState([])
 
-  const [actualQuestion, setActualQuestion] = useState(
-    questionsMatched[actualQuestionIndex]
-  )
-  console.log(questionsMatched)
+  const nextQuestion = () => {
+    setQuestionIndex(questionIndex + 1)
+  }
+  useEffect(() => {
+    setCurrentQuestion(ARRAY_QUESTIONS[questionIndex])
+  }, [questionIndex])
+  console.log(questionIndex, ' - ', MAX_QUESTION)
+
+  //
+  questionIndex >= MAX_QUESTION &&
+    // setShowResults(true) &&
+    console.log('results', results)
+
   return (
     <>
-      <Nav path={['collections', id]} actualLink={id} />
+      <Nav path={['collections', id]} actualLink={'collection/' + id} />
       {!started && (
         <CollectionCover
           id={collection.id}
@@ -38,25 +47,31 @@ export default function CollectionPage({
           setStarted={setStarted}
         />
       )}
-      {started && (
+      {started && questionIndex < MAX_QUESTION && (
         <div>
           <Question
-            id={actualQuestion.id}
-            title={actualQuestion.title}
-            anwers={actualQuestion.answers}
-            solution={actualQuestion.solution}
-            creator={actualQuestion.creator}
-            createdAt={actualQuestion.createdAt}
-            likes={actualQuestion.likes}
-            incorrect={actualQuestion.incorrect}
-            actualQuestionIndex={actualQuestionIndex}
+            id={currentQuestion.id}
+            title={currentQuestion.title}
+            anwers={currentQuestion.answers}
+            solution={currentQuestion.solution}
+            creator={currentQuestion.creator}
+            createdAt={currentQuestion.createdAt}
+            likes={currentQuestion.likes}
+            incorrect={currentQuestion.incorrect}
+            questionIndex={questionIndex}
             nextQuestion={nextQuestion}
             results={results}
             setResults={setResults}
           />
         </div>
       )}
-      <style jsx>{``}</style>
+      {questionIndex >= MAX_QUESTION && (
+        <Results
+          results={results}
+          userName={userName}
+          title={collection.title}
+        />
+      )}
     </>
   )
 }
@@ -74,5 +89,5 @@ export async function getServerSideProps(context) {
     return questMatch
   })
 
-  return { props: { collection, id, DBquests, questionsMatched } }
+  return { props: { collection, id, questionsMatched } }
 }

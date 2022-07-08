@@ -5,7 +5,7 @@ export default function PassingQuestions({ questions }) {
   const [qn, setQuestionNumber] = useState(0)
   const [results, setResults] = useState([])
 
-  const next = () => {
+  const nextQuestion = () => {
     if (qn < questions.length - 1) setQuestionNumber(qn + 1)
     if (qn === questions.length - 1) {
       // when finish
@@ -25,35 +25,9 @@ export default function PassingQuestions({ questions }) {
         createdAt={questions[qn].createdAt}
         likes={questions[qn].likes}
         incorrect={questions[qn].incorrect}
-        changeQuestion={next}
+        changeQuestion={nextQuestion}
         setResults={setResults}
       />
-      {/* {questions.map(
-        ({
-          id = 0,
-          title = 'Is this your first question?',
-          anwers = ['yes', 'no', 'maybe'],
-          solution = 'yes',
-          creator = 'Pol',
-          createdAt = '2020-01-01',
-          likes = 0,
-          incorrect = 0,
-        }) => {
-          return (
-            <Question
-              key={id}
-              id={id}
-              title={title}
-              anwers={anwers}
-              solution={solution}
-              creator={creator}
-              createdAt={createdAt}
-              likes={likes}
-              incorrect={incorrect}
-            />
-          )
-        }
-      )} */}
     </>
   )
 }

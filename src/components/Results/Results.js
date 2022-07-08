@@ -1,8 +1,10 @@
 import AppLayout from '@c/AppLayout'
 import { addOpacityToColor } from '@sty/utils'
-import { colors, fontSizes } from '../../styles/theme'
+import { colors, fontSizes, breakpoints } from '../../styles/theme'
 import CorrectedQuest from './CorrectedQuest'
 import Link from 'next/link'
+import Button from '@c/Button'
+
 export default function Results({
   results,
   userName = 'Anonymous',
@@ -58,7 +60,7 @@ export default function Results({
               <div className="buttonsContainer">
                 <Link
                   href={{
-                    pathname: `/user/${userName}`,
+                    pathname: `/profile/${userName}`,
                   }}
                 >
                   <a>
@@ -67,7 +69,7 @@ export default function Results({
                 </Link>
                 <Link href="/home">
                   <a>
-                    <p className="goHome">Go Home</p>
+                    <Button className="goHome" text="Go Home" />
                   </a>
                 </Link>
               </div>
@@ -160,6 +162,18 @@ export default function Results({
         }
         .send:hover {
           background-color: ${addOpacityToColor(colors.primary, 0.7)};
+        }
+        @media (max-width: ${breakpoints.mobile}) {
+          .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+          }
+        }
+        .results {
+          justify-content: flex-start;
+        }
+        .buttonContainer {
         }
       `}</style>
     </>

@@ -12,6 +12,8 @@ export const colors = {
   primary: '#0099ff',
   secondary: '#1c5480',
   background: '#96d5ff',
+  right: '#88ff9c',
+  wrong: '#ff8787',
 }
 
 export const fontSizes = {
@@ -19,4 +21,6 @@ export const fontSizes = {
   header: '24px',
   subheader: '20px',
   small: '14px',
+  big: '48px',
+  extraBig: '96px',
 }

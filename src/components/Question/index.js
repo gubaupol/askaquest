@@ -1,7 +1,7 @@
 import { colors, fontSizes } from '../../styles/theme'
 import { useState } from 'react'
 import AppLayout from '@c/AppLayout'
-
+import { addOpacityToColor } from '@sty/utils'
 export default function Question({
   id = 0,
   title = 'Your connection did not work, do you know why?',
@@ -10,7 +10,7 @@ export default function Question({
   creator = 'Pol',
 
   nextQuestion,
-  actualQuestionIndex,
+  questionIndex,
   results,
   setResults,
 }) {
@@ -28,7 +28,8 @@ export default function Question({
     setResults([
       ...results,
       {
-        index: actualQuestionIndex,
+        index: questionIndex,
+        question: title,
         solution,
         isCorrect,
       },
@@ -44,7 +45,9 @@ export default function Question({
             <small>@{creator}</small>
           </header>
           <div className="content">
-            <p className="title">{title}</p>
+            <p className="title">
+              {id}.{title}
+            </p>
             <div className="answers">
               {anwers.map((answer, index) => {
                 return (
@@ -103,8 +106,10 @@ export default function Question({
           font-size: ${fontSizes.subheader};
         }
         .send {
-          background: red;
+          background: ${addOpacityToColor(colors.primary, 0.5)};
           width: fit-content;
+          border-radius: 10px;
+          padding: 5px 15px;
           cursor: pointer;
         }
       `}</style>

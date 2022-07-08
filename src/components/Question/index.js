@@ -1,13 +1,15 @@
 import { colors, fontSizes } from '../../styles/theme'
 import { useState } from 'react'
 import AppLayout from '@c/AppLayout'
+import Button from '@c/Button'
+
 import { addOpacityToColor } from '@sty/utils'
 export default function Question({
   id = 0,
   title = 'Your connection did not work, do you know why?',
-  anwers = ['yes', 'no', 'maybe'],
+  answers,
   solution = 'yes',
-  creator = 'Pol',
+  creator = 'unknown',
 
   nextQuestion,
   questionIndex,
@@ -21,7 +23,7 @@ export default function Question({
       : setSelectedIndex(index)
   }
   const handleSubmit = () => {
-    const yourAnswer = anwers[selectedIndex]
+    const yourAnswer = answers[selectedIndex]
     const isCorrect = yourAnswer === solution
 
     // concat in results array the index of question, its solution and if you did it right
@@ -49,7 +51,7 @@ export default function Question({
               {id}.{title}
             </p>
             <div className="answers">
-              {anwers.map((answer, index) => {
+              {answers.map((answer, index) => {
                 return (
                   <div
                     onClick={() => select(index)}
@@ -68,9 +70,7 @@ export default function Question({
                 )
               })}
             </div>
-            <p className="send" onClick={handleSubmit}>
-              Send
-            </p>
+            <Button text="Next" start={handleSubmit} />
           </div>
         </article>
       </AppLayout>

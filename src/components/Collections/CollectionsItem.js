@@ -1,13 +1,13 @@
 import { colors } from '@sty/theme'
 import { addOpacityToColor } from '@sty/utils'
 
-export default function CollectionsItem({ title }) {
+export default function CollectionsItem({ title, length }) {
   return (
     <>
       <section>
         <div>
           <h3>{title}</h3>
-          <p>This is a colection</p>
+          <p>This quest has {length} questions.</p>
         </div>
       </section>
 

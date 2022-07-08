@@ -15,7 +15,7 @@ export default function singleQuestionPage({ quests }) {
           key={quest.id}
           id={quest.id}
           title={quest.title}
-          anwers={quest.anwers}
+          answers={quest.answers}
           solution={quest.solution}
           creator={quest.creator}
           createdAt={quest.createdAt}

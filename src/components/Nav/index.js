@@ -1,12 +1,21 @@
 import { breakpoints, colors, fontSizes } from '../../styles/theme'
+
 import Link from 'next/link'
 import { addOpacityToColor } from '@sty/utils'
+import usePascalCase from '@h/usePascalCase'
 
 export default function Nav({
+  actualName,
   actualRoot = 'home',
   path = [],
   actualLink = '/',
+
+  yourName = 'pol',
+  yourAvatar = 'https://api.multiavatar.com/pol.png',
 }) {
+  const linkToProfile = yourName
+  yourName = usePascalCase(yourName)
+
   return (
     <>
       <section>
@@ -24,8 +33,28 @@ export default function Nav({
                   </Link>
                 </div>
               ))}
+            <Link href={`${'/' + actualLink}`}>
+              <a>
+                <span>/</span>
+                {actualName}
+              </a>
+            </Link>
           </div>
-          <div>Profile</div>
+          <Link href={`${'/profile/' + linkToProfile}`}>
+            <a>
+              <div className="profileLink">
+                <div className="nameProfile">
+                  <p>
+                    <b>{yourName}</b>
+                  </p>
+                  <p>
+                    <small>Your Profile</small>
+                  </p>
+                </div>
+                <img className="avatar" src={yourAvatar} alt={yourName} />
+              </div>
+            </a>
+          </Link>
         </nav>
       </section>
       <style jsx>{`
@@ -59,11 +88,28 @@ export default function Nav({
         }
         div {
           display: flex;
+          align-items: center;
+          align-content: center;
+          flex-wrap: wrap;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .profileLink {
+          display: flex;
+        }
+        .nameProfile {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-end;
+        }
+        .nameProfile p {
+          margin: 0;
         }
         .avatar {
-          margin-left: 15px;
-          border-radius: 50%;
           width: 49px;
+          height: 49px;
+          margin-left: 10px;
         }
         //midas de pc
         @media (min-width: ${breakpoints.mobile}) {

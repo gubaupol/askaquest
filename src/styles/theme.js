@@ -1,5 +1,6 @@
 export const breakpoints = {
-  mobile: '960px',
+  tablet: '960px',
+  mobile: '480px',
 }
 
 export const fonts = {

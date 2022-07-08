@@ -1,11 +1,12 @@
 import AppLayout from '@c/AppLayout'
+import Button from '@c/Button'
 import { addOpacityToColor } from '@sty/utils'
+import Link from 'next/link'
 import { colors, fontSizes } from '../../styles/theme'
-
 export default function CollectionCover({
   id,
   userId,
-  userName = 'Pol Gubau',
+  userName = 'unknow',
   title,
   tags,
   questions,
@@ -21,7 +22,11 @@ export default function CollectionCover({
       <article key={id} className="container">
         <AppLayout>
           <header className="names">
-            <small>@{userName}</small>
+            <Link href={`/profile/${userName}`}>
+              <a>
+                <small>@{userName}</small>
+              </a>
+            </Link>
           </header>
           <div className="content">
             <h3 className="title">{title}</h3>
@@ -34,11 +39,7 @@ export default function CollectionCover({
             <div className="answers">
               This test has <b>{questions.length}</b> questions.
             </div>
-            <div className="sendCont">
-              <p className="send" onClick={start}>
-                Start
-              </p>
-            </div>
+            <Button text="Start" start={start} />
           </div>
         </AppLayout>
       </article>
@@ -100,6 +101,7 @@ export default function CollectionCover({
           align-content: center;
         }
         .send {
+          margin: 0;
           cursor: pointer;
           display: flex;
           background-color: ${addOpacityToColor(colors.primary, 0.4)};
@@ -110,6 +112,17 @@ export default function CollectionCover({
         }
         .send:hover {
           background-color: ${addOpacityToColor(colors.primary, 0.7)};
+        }
+        .buttonsContainer {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          flex-wrap: wrap;
+          flex-direction: column;
+          align-content: flex-end;
         }
       `}</style>
     </>

@@ -4,7 +4,7 @@ const { model, Schema } = mongoose
 // esquema para crear una clase para las quests
 const questSchema = new Schema({
   title: String,
-  anwers: Array,
+  answers: Array,
   solution: String,
   creator: String,
   createdAt: Date,

@@ -1,37 +1,44 @@
-import { colors } from '../../styles/theme'
-
-export default function Button({ disabled, children, onClick }) {
+import { colors, fontSizes } from '../../styles/theme'
+import { addOpacityToColor } from '../../styles/utils'
+export default function Button({ disabled = false, start, text = 'button' }) {
   return (
     <>
-      <button disabled={disabled} onClick={onClick}>
-        {children}
+      <button className="buttonsContainer" disabled={disabled} onClick={start}>
+        <p className="send">{text}</p>
       </button>
       <style jsx>{`
-        button {
-          margin: 5px;
-          align-items: center;
-          background: ${colors.black};
-          border-radius: 9999px;
-          border: 0;
-          color: #fff;
+        .buttonsContainer {
           cursor: pointer;
           display: flex;
-          font-size: 16px;
-          font-weight: 800;
-          padding: 8px 24px;
-          transition: opacity 0.3s ease;
+          justify-content: flex-start;
+          width: fit-content;
+          align-items: center;
+          flex-wrap: wrap;
+          flex-direction: row;
+          align-content: center;
+          margin: 0;
+          border-radius: 7px;
+          background-color: ${addOpacityToColor(colors.primary, 0.4)};
         }
-
-        button > :global(svg) {
-          margin-right: 8px;
+        .send {
+          margin: 0;
+          font-size: ${fontSizes.subheader};
+          display: flex;
+          padding: 5px 15px;
         }
-        button[disabled] {
-          pointer-events: none;
-          opacity: 0.2;
+        .buttonsContainer:hover {
+          background-color: ${addOpacityToColor(colors.primary, 0.7)};
         }
-
-        button:hover {
-          opacity: 0.7;
+        .buttonsContainer {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          flex-wrap: wrap;
+          flex-direction: column;
+          align-content: flex-end;
         }
       `}</style>
     </>

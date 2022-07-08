@@ -7,45 +7,36 @@ import { colors } from '../styles/theme'
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>AskAQuest</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <AppLayout>
         <div className={styles.container}>
-          <Head>
-            <title>AskAQuest</title>
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
-          Aquí se hace login
+          <section>
+            <h1>AskAQuest</h1>
+            <section className="buttonsContainer">
+              <button>Login</button>
+              <button>Create an account</button>
+            </section>
+          </section>
         </div>
       </AppLayout>
       <style jsx>{`
-        img {
-          width: 120px;
-        }
-        .buttons {
+        .buttonsContainer {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           margin: 10px;
         }
-        div {
-          margin-top: 16px;
-        }
-
-        section {
-          display: grid;
-          height: 100%;
-          place-content: center;
-          place-items: center;
+        button {
+          margin: 5px 2px;
+          padding: 3px 6px;
         }
 
         h1 {
           color: ${colors.secondary};
           font-weight: 800;
           margin-bottom: 16px;
-        }
-
-        h2 {
-          color: ${colors.primary};
-          font-size: 21px;
-          margin: 0;
         }
       `}</style>
     </>

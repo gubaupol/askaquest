@@ -20,7 +20,10 @@ export default function Collections({
             }}
           >
             <a>
-              <CollectionsItem title={collection.title} />
+              <CollectionsItem
+                title={collection.title}
+                length={allCollections.length}
+              />
             </a>
           </Link>
         ))}

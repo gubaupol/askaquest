@@ -7,10 +7,12 @@ import Results from '@c/Results/Results'
 //
 export default function CollectionPage({
   collection,
-  id,
+  collectionId,
   questionsMatched,
-  userName = 'Anonymous',
+  user,
 }) {
+  console.log(user)
+
   const MAX_QUESTION = Number(questionsMatched.length)
   const ARRAY_QUESTIONS = questionsMatched
   const [questionIndex, setQuestionIndex] = useState(0)
@@ -20,6 +22,7 @@ export default function CollectionPage({
   const [started, setStarted] = useState(false)
   const [results, setResults] = useState([])
 
+  //
   const nextQuestion = () => {
     setQuestionIndex(questionIndex + 1)
   }
@@ -28,19 +31,17 @@ export default function CollectionPage({
   }, [questionIndex])
   console.log(questionIndex, ' - ', MAX_QUESTION)
 
-  //
-  questionIndex >= MAX_QUESTION &&
-    // setShowResults(true) &&
-    console.log('results', results)
-
   return (
     <>
-      <Nav path={['collections', id]} actualLink={'collection/' + id} />
+      <Nav
+        path={['collections', collectionId]}
+        actualLink={'collection/' + collectionId}
+      />
       {!started && (
         <CollectionCover
           id={collection.id}
           userId={collection.userId}
-          userName={userName}
+          userName={user.userName}
           title={collection.title}
           tags={collection.tags}
           questions={collection.questions}
@@ -52,7 +53,7 @@ export default function CollectionPage({
           <Question
             id={currentQuestion.id}
             title={currentQuestion.title}
-            anwers={currentQuestion.answers}
+            answers={currentQuestion.answers}
             solution={currentQuestion.solution}
             creator={currentQuestion.creator}
             createdAt={currentQuestion.createdAt}
@@ -68,7 +69,7 @@ export default function CollectionPage({
       {questionIndex >= MAX_QUESTION && (
         <Results
           results={results}
-          userName={userName}
+          userName={user.userName}
           title={collection.title}
         />
       )}
@@ -76,18 +77,25 @@ export default function CollectionPage({
   )
 }
 export async function getServerSideProps(context) {
-  const { id } = context.query
-
+  let { id } = context.query
+  const collectionId = id
+  // taking apis
   const resCollection = await fetch(`${PATH}/api/singleCollection/${id}`)
   const resQuests = await fetch(`${PATH}/api/quests`)
+  // to json
   const collection = await resCollection.json()
   const DBquests = await resQuests.json()
 
-  // we need to find which questions match width the DBquests.id
+  // we need to find which questions matches with the DBquests.id
   const questionsMatched = collection.questions.map((quest) => {
     const questMatch = DBquests.find((DBquest) => DBquest.id === quest)
     return questMatch
   })
+  const { userId } = collection
+  id = userId
+  // finding the user that created the collection
+  const resUsers = await fetch(`${PATH}/api/singleUser/${id}`)
+  const user = await resUsers.json()
 
-  return { props: { collection, id, questionsMatched } }
+  return { props: { collection, collectionId, questionsMatched, user } }
 }

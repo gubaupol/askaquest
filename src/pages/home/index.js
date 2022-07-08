@@ -15,6 +15,9 @@ export default function HomePage({ allCollections }) {
         </Head>
         <main>
           <section>
+            <h1>AskaQuest</h1>
+          </section>
+          <section>
             <p>New Collections: </p>
             <Collections allCollections={allCollections} userName="Pol" />
           </section>

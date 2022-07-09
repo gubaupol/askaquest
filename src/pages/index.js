@@ -3,8 +3,10 @@ import styles from '../styles/Home.module.css'
 import AppLayout from '@c/AppLayout'
 
 import { colors } from '../styles/theme'
+import { connectToDatabase } from 'libs/mongodb'
 
-export default function Home() {
+export default function Home({ isConnected }) {
+  console.log(isConnected)
   return (
     <>
       <Head>
@@ -41,4 +43,13 @@ export default function Home() {
       `}</style>
     </>
   )
+}
+export async function getServerSideProps(context) {
+  const { client } = await connectToDatabase()
+
+  const isConnected = await client.isConnected() // Returns true or false
+
+  return {
+    props: { isConnected },
+  }
 }

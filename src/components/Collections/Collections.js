@@ -7,7 +7,15 @@ export default function Collections({
     { id: 1, title: 'No conection' },
     { id: 2, title: 'No conection' },
   ],
+  success = false,
 }) {
+  if (!success) {
+    return (
+      <div>
+        <h1>No conection</h1>
+      </div>
+    )
+  }
   return (
     <>
       <section>
@@ -16,7 +24,7 @@ export default function Collections({
             key={collection.id}
             href={{
               pathname: '/collection/[id]',
-              query: { id: collection.id },
+              query: { id: collection._id },
             }}
           >
             <a>

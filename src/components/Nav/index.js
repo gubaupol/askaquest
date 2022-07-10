@@ -1,21 +1,30 @@
 import { breakpoints, colors, fontSizes } from '../../styles/theme'
-
+// import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { addOpacityToColor } from '@sty/utils'
-import usePascalCase from '@h/usePascalCase'
+// import usePascalCase from '@h/usePascalCase'
 
 export default function Nav({
   actualName,
   actualRoot = 'home',
   path = [],
   actualLink = '/',
-
-  yourName = 'pol',
-  yourAvatar = 'https://api.multiavatar.com/pol.png',
 }) {
-  const linkToProfile = yourName
-  yourName = usePascalCase(yourName)
+  // const router = useRouter()
 
+  // check if I'm in the browser or server
+
+  // take user from localStorage only if I'm in the browser
+
+  // taking user from localstorage, if it doesn't exist, lets go to login pag
+  // const user = JSON.parse(localStorage.getItem('user'))
+  // if (!user) {
+  //   router.push('/')
+  // }
+  const user = {
+    name: 'John Doe',
+    img: `https://api.multiavatar.com/a.png`,
+  }
   return (
     <>
       <section>
@@ -33,25 +42,25 @@ export default function Nav({
                   </Link>
                 </div>
               ))}
-            <Link href={`${'/' + actualLink}`}>
+            <Link href={`${actualLink}`}>
               <a>
                 <span>/</span>
                 {actualName}
               </a>
             </Link>
           </div>
-          <Link href={`${'/profile/' + linkToProfile}`}>
+          <Link href={`${'/profile/' + user.name}`}>
             <a>
               <div className="profileLink">
                 <div className="nameProfile">
                   <p>
-                    <b>{yourName}</b>
+                    <b>{user.name}</b>
                   </p>
                   <p>
                     <small>Your Profile</small>
                   </p>
                 </div>
-                <img className="avatar" src={yourAvatar} alt={yourName} />
+                <img className="avatar" src={user.img} alt={user.name} />
               </div>
             </a>
           </Link>

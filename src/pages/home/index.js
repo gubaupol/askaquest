@@ -4,7 +4,11 @@ import { PATH } from '@s/consts'
 import AppLayout from '@c/AppLayout'
 import Nav from '@c/Nav'
 
-export default function HomePage({ allCollections }) {
+export default function HomePage({ responseCollection }) {
+  // taking current user from localStorage
+  const allCollections = responseCollection.message
+  const success = responseCollection.success
+  console.log(allCollections, success)
   return (
     <>
       <Nav actualRoot="home" />
@@ -19,7 +23,7 @@ export default function HomePage({ allCollections }) {
           </section>
           <section>
             <p>New Collections: </p>
-            <Collections allCollections={allCollections} userName="Pol" />
+            <Collections allCollections={allCollections} success={success} />
           </section>
         </main>
       </AppLayout>
@@ -45,6 +49,7 @@ export default function HomePage({ allCollections }) {
 }
 export async function getServerSideProps() {
   const res = await fetch(`${PATH}/api/collections`)
-  const allCollections = await res.json()
-  return { props: { allCollections } }
+
+  const responseCollection = await res.json()
+  return { props: { responseCollection } }
 }

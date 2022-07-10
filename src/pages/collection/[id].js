@@ -80,14 +80,14 @@ export async function getServerSideProps(context) {
   let { id } = context.query
   const collectionId = id
   // taking apis
-  const resCollection = await fetch(`${PATH}/api/singleCollection/${id}`)
+  const resCollection = await fetch(`${PATH}/api/collections/${id}`)
   const resQuests = await fetch(`${PATH}/api/quests`)
   // to json
   const collection = await resCollection.json()
   const DBquests = await resQuests.json()
-
+  console.log(collection)
   // we need to find which questions matches with the DBquests.id
-  const questionsMatched = collection.questions.map((quest) => {
+  const questionsMatched = collection.message.questions.map((quest) => {
     const questMatch = DBquests.find((DBquest) => DBquest.id === quest)
     return questMatch
   })

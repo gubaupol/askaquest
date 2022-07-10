@@ -1,89 +1,107 @@
-import { connectToDatabase } from '../../../libs/mongodb'
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+const { connectToDatabase } = require('../../../libs/mongodb')
+const ObjectId = require('mongodb').ObjectId
 
 export default async function handler(req, res) {
-  const { db } = await connectToDatabase()
-  // Send all the todos
-  const todos = await db.collection('quests').find({}).toArray()
-  res.status(200).json(todos)
-}
-// export default function (req, res) {
-//   const allQuests = [
-//     {
-//       id: '0',
-//       userId: 0,
-//       title: 'Is this your first question?',
-//       answers: ['yes', 'no', 'maybe'],
-//       solution: 'yes',
-//       creator: 'Pol',
-//       createdAt: '2020-01-01',
-//       likes: 0,
-//       incorrect: 0,
-//     },
-//     {
-//       id: '1',
-//       userId: 0,
-//       title: 'Is this your second question?',
-//       answers: ['yes', 'no', 'maybe'],
-//       solution: 'yes',
-//       creator: 'Pol',
-//       createdAt: '2021-03-06',
-//       likes: 5,
-//       incorrect: 6,
-//     },
-//     {
-//       id: '2',
-//       userId: 0,
-//       title: 'Is this your third question?',
-//       answers: ['yes', 'no', 'maybe'],
-//       solution: 'yes',
-//       creator: 'Pol',
-//       createdAt: '2020-01-01',
-//       likes: 0,
-//       incorrect: 0,
-//     },
-//     {
-//       id: '3',
-//       userId: 0,
-//       title: 'Is this your fourth question?',
-//       answers: ['yes', 'no', 'maybe'],
-//       solution: 'yes',
-//       creator: 'Pol',
-//       createdAt: '2021-03-06',
-//       likes: 5,
-//       incorrect: 6,
-//     },
-//     {
-//       id: '4',
-//       userId: 1,
-//       title: '¿Donde encontramos un parterre?',
-//       answers: [
-//         'En un jardín',
-//         'En una estación de bomberos',
-//         'En la barra de un bar',
-//       ],
-//       solution: 'En un jardín',
-//       creator: 'Pol',
-//       createdAt: '2021-03-06',
-//       likes: 5,
-//       incorrect: 6,
-//     },
-//     {
-//       id: '5',
-//       userId: 1,
-//       title:
-//         '¿Lleva tilde el "solo" con la definición de "Único en su especie" ?',
-//       answers: [
-//         'Sí, Sólo',
-//         'No, nunca',
-//         'No, el que lleva tilde es el "solo" de soledad',
-//       ],
-//       solution: 'No, nunca',
-//       creator: 'Pol',
-//       createdAt: '2021-03-06',
-//       likes: 5,
-//       incorrect: 6,
-//     },
-//   ]
+  // switch the methods
+  switch (req.method) {
+    case 'GET': {
+      return getQuests(req, res)
+    }
 
-//   res.status(200).json(allQuests)
-// }
+    case 'POST': {
+      return addPost(req, res)
+    }
+
+    case 'PUT': {
+      return updatePost(req, res)
+    }
+
+    case 'DELETE': {
+      return deletePost(req, res)
+    }
+  }
+}
+
+// Getting all quests.
+async function getQuests(req, res) {
+  try {
+    const { db } = await connectToDatabase()
+    const quests = await db
+      .collection('quests')
+      .find({})
+      .sort({ published: -1 })
+      .toArray()
+    return res.json({
+      message: JSON.parse(JSON.stringify(quests)),
+      success: true,
+    })
+  } catch (error) {
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    })
+  }
+}
+
+// Adding a new post
+async function addPost(req, res) {
+  try {
+    const { db } = await connectToDatabase()
+    await db.collection('quests').insertOne(JSON.parse(req.body))
+    return res.json({
+      message: 'Post added successfully',
+      success: true,
+    })
+  } catch (error) {
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    })
+  }
+}
+
+// Updating a post
+async function updatePost(req, res) {
+  try {
+    const { db } = await connectToDatabase()
+
+    await db.collection('quests').updateOne(
+      {
+        _id: new ObjectId(req.body),
+      },
+      { $set: { published: true } }
+    )
+
+    return res.json({
+      message: 'Post updated successfully',
+      success: true,
+    })
+  } catch (error) {
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    })
+  }
+}
+
+// deleting a post
+async function deletePost(req, res) {
+  try {
+    const { db } = await connectToDatabase()
+
+    await db.collection('quests').deleteOne({
+      _id: new ObjectId(req.body),
+    })
+
+    return res.json({
+      message: 'Post deleted successfully',
+      success: true,
+    })
+  } catch (error) {
+    return res.json({
+      message: new Error(error).message,
+      success: false,
+    })
+  }
+}
